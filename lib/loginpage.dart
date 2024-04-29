@@ -1,10 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:progmob_1/homepage.dart';
 import 'package:progmob_1/registerpage.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final dio = Dio();
+  final myStorage = GetStorage();
+  final apiUrl = 'https://mobileapis.manpits.xyz/api';
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +38,7 @@ class LoginPage extends StatelessWidget {
 
               // Email
               TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: const TextStyle(color: Colors.black),
@@ -48,7 +58,10 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+
+              // Passowrd
               TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -66,13 +79,12 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Login
               ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: const HomePage(),
-                            type: PageTransitionType.fade));
+                    goLogin(context, dio, myStorage, apiUrl, emailController,
+                        passwordController);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -85,14 +97,16 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: const Text('Masuk',
                       style: TextStyle(color: Colors.black))),
+
               const SizedBox(height: 10),
+
+              // Daftar
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         PageTransition(
-                            child: const Register(),
-                            type: PageTransitionType.fade));
+                            child: Register(), type: PageTransitionType.fade));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -110,5 +124,24 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void goLogin(BuildContext context, dio, myStorage, apiUrl, emailController,
+    passwordController) async {
+  try {
+    final response = await dio.post(
+      '$apiUrl/login',
+      data: {
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+    print(response.data);
+    Navigator.push(context,
+        PageTransition(child: const HomePage(), type: PageTransitionType.fade));
+    myStorage.write('token', response.data['data']['token']);
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
   }
 }

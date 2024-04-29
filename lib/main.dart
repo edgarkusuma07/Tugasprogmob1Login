@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:progmob_1/homepage.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:progmob_1/loginpage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login',
       home: LoginPage(),

@@ -1,9 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:progmob_1/homepage.dart';
+import 'package:progmob_1/loginpage.dart';
 
 class Register extends StatelessWidget {
-  const Register({super.key});
+  Register({super.key});
+
+  final dio = Dio();
+  final apiUrl = 'https://mobileapis.manpits.xyz/api';
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +39,9 @@ class Register extends StatelessWidget {
               height: 54,
             ),
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
-                labelText: 'No.Telepon',
+                labelText: 'Nama Lengkap',
                 labelStyle: const TextStyle(color: Colors.black),
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
@@ -51,8 +60,9 @@ class Register extends StatelessWidget {
               height: 20,
             ),
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Masukan Nama Lengkap',
+                labelText: 'Email',
                 labelStyle: const TextStyle(color: Colors.black),
                 fillColor: const Color.fromARGB(255, 255, 254, 254),
                 filled: true,
@@ -71,8 +81,9 @@ class Register extends StatelessWidget {
               height: 20,
             ),
             TextField(
+              controller: passwordController,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: 'Password',
                 labelStyle: const TextStyle(color: Colors.black),
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
@@ -88,15 +99,19 @@ class Register extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+
+            // Daftar
             SizedBox(
               width: 250,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: const HomePage(),
-                            type: PageTransitionType.fade));
+                    goRegister(context, dio, apiUrl, nameController,
+                        emailController, passwordController);
+                    // Navigator.push(
+                    //     context,
+                    //     PageTransition(
+                    //         child: const HomePage(),
+                    //         type: PageTransitionType.fade));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -117,5 +132,24 @@ class Register extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void goRegister(BuildContext context, dio, apiUrl, nameController,
+    emailController, passwordController) async {
+  try {
+    final response = await dio.post(
+      '$apiUrl/register',
+      data: {
+        'name': nameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+    print(response.data);
+    Navigator.push(context,
+        PageTransition(child: LoginPage(), type: PageTransitionType.fade));
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
   }
 }
