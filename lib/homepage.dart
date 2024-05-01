@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(30)),
                   backgroundColor: Color.fromARGB(255, 0, 0, 0),
                 ),
-                child: const Text('Loguot',
+                child: const Text('Logout',
                     style:
                         TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
           ],
