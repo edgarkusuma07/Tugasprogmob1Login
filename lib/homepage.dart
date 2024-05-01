@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:progmob_1/loginpage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,10 +47,30 @@ class _HomePageState extends State<HomePage> {
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: Colors.green[300],
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text('Cek User',
-                    style: TextStyle(color: Colors.black))),
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  goLogout(context, dio, myStorage, apiUrl);
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Color.fromARGB(255, 14, 95, 161),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(30)),
+                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                ),
+                child: const Text('Loguot',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
           ],
         ),
       ),
@@ -65,6 +87,25 @@ void goUser(dio, myStorage, apiUrl) async {
       ),
     );
     print(response.data);
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
+  }
+}
+
+void goLogout(BuildContext context, dio, myStorage, apiUrl) async {
+  try {
+    final response = await dio.get(
+      '$apiUrl/logout',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${myStorage.read('token')}'},
+      ),
+    );
+    print(response.data);
+
+    Navigator.push(
+      context,
+      PageTransition(child: LoginPage(), type: PageTransitionType.fade),
+    );
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
   }

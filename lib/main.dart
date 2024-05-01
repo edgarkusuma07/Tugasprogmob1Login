@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:progmob_1/homepage.dart';
 import 'package:progmob_1/loginpage.dart';
+import 'package:progmob_1/registerpage.dart';
 
 void main() async {
   await GetStorage.init();
@@ -16,7 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login',
-      home: LoginPage(),
+      routes: {
+        '/': (context) => const HomePage(),
+        '/login': (context) => LoginPage(),
+        '/register': (context) => Register(),
+      },
+      initialRoute: '/login',
     );
   }
 }

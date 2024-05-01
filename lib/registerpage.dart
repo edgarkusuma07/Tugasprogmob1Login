@@ -46,11 +46,11 @@ class Register extends StatelessWidget {
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(color: Colors.black, width: 2),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
                       color: Color.fromARGB(255, 0, 0, 0), width: 2),
                 ),
@@ -67,11 +67,11 @@ class Register extends StatelessWidget {
                 fillColor: const Color.fromARGB(255, 255, 254, 254),
                 filled: true,
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(color: Colors.black, width: 2),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
                       color: Color.fromARGB(255, 0, 0, 0), width: 2),
                 ),
@@ -88,11 +88,11 @@ class Register extends StatelessWidget {
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(color: Colors.black, width: 2),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
                       color: Color.fromARGB(255, 0, 0, 0), width: 2),
                 ),

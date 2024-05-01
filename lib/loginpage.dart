@@ -18,11 +18,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 148, 241, 151),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        title: const Text('Halaman Login'),
+        title: const Text(
+          'Halaman Login',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
       body: Center(
         child: Padding(
@@ -30,9 +33,12 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 50),
-              const Text(
-                'Login',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              Container(
+                width: 300,
+                child: const Text(
+                  'Sudah memiliki akun? silahkan masuk',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
               ),
               const SizedBox(height: 30),
 
@@ -42,17 +48,17 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: const TextStyle(color: Colors.black),
-                    fillColor: Colors.grey,
+                    fillColor: const Color.fromARGB(255, 255, 255, 255),
                     filled: true,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                       borderSide:
                           const BorderSide(color: Colors.black, width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          const BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 0, 0, 0), width: 2),
                     )),
               ),
               const SizedBox(
@@ -66,59 +72,69 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: Colors.grey,
+                  fillColor: const Color.fromARGB(255, 255, 253, 253),
                   filled: true,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(30),
                     borderSide: const BorderSide(color: Colors.black, width: 2),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.green, width: 2),
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
 
               // Login
-              ElevatedButton(
-                  onPressed: () {
-                    goLogin(context, dio, myStorage, apiUrl, emailController,
-                        passwordController);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: Colors.green[300],
-                  ),
-                  child: const Text('Masuk',
-                      style: TextStyle(color: Colors.black))),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () {
+                      goLogin(context, dio, myStorage, apiUrl, emailController,
+                          passwordController);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                    child: const Text('Masuk',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)))),
+              ),
 
               const SizedBox(height: 10),
 
               // Daftar
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: Register(), type: PageTransitionType.fade));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: Colors.green[300],
-                  ),
-                  child: const Text('Daftar?',
-                      style: TextStyle(color: Colors.black))),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: Register(),
+                              type: PageTransitionType.fade));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                    ),
+                    child: const Text('Daftar?',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)))),
+              ),
             ],
           ),
         ),
