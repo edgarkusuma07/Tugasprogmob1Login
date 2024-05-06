@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:progmob_1/loginpage.dart';
 
+// ignore: must_be_immutable
 class Register extends StatelessWidget {
   Register({super.key});
 

@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:progmob_1/homepage.dart';
 import 'package:progmob_1/registerpage.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
