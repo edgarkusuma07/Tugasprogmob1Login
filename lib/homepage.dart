@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:progmob_1/AddUser.dart';
+import 'package:progmob_1/list_transaksi.dart';
 import 'package:progmob_1/list_user.dart';
 import 'package:progmob_1/loginpage.dart';
 
@@ -98,6 +99,29 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text('Cek Daftar User',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        child: ListTransaksi(), type: PageTransitionType.fade),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Color.fromARGB(255, 14, 95, 161),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(30)),
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                ),
+                child: const Text('Transaksi Anggota',
                     style:
                         TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
             const SizedBox(

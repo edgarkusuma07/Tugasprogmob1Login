@@ -1,30 +1,48 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:progmob_1/homepage.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:progmob_1/list_user.dart';
+// import 'package:page_transition/page_transition.dart';
 
-class AddUser extends StatefulWidget {
-  const AddUser({super.key});
+class EditUser extends StatefulWidget {
+  final Map<String, dynamic> user;
+
+  const EditUser({
+    super.key,
+    required this.user,
+  });
 
   @override
-  State<AddUser> createState() => _AddUserState();
+  State<EditUser> createState() => _EditUserState();
 }
 
-class _AddUserState extends State<AddUser> {
+class _EditUserState extends State<EditUser> {
   final dio = Dio();
   final myStorage = GetStorage();
   final apiUrl = 'https://mobileapis.manpits.xyz/api';
 
-  TextEditingController noIndukController = TextEditingController();
-  TextEditingController namaController = TextEditingController();
-  TextEditingController alamatController = TextEditingController();
-  TextEditingController tglLahirController = TextEditingController();
-  TextEditingController teleponController = TextEditingController();
+  late TextEditingController noIndukController;
+  late TextEditingController namaController;
+  late TextEditingController alamatController;
+  late TextEditingController tglLahirController;
+  late TextEditingController teleponController;
 
-  void addUser() async {
+  @override
+  void initState() {
+    super.initState();
+    noIndukController =
+        TextEditingController(text: widget.user['nomor_induk'].toString());
+    namaController = TextEditingController(text: widget.user['nama']);
+    alamatController = TextEditingController(text: widget.user['alamat']);
+    tglLahirController = TextEditingController(text: widget.user['tgl_lahir']);
+    teleponController = TextEditingController(text: widget.user['telepon']);
+  }
+
+  void updateUser() async {
     try {
-      final response = await dio.post(
-        '$apiUrl/anggota',
+      final response = await dio.put(
+        '$apiUrl/anggota/${widget.user['id']}',
         options: Options(
           headers: {'Authorization': 'Bearer ${myStorage.read('token')}'},
         ),
@@ -36,12 +54,15 @@ class _AddUserState extends State<AddUser> {
           'telepon': teleponController.text,
         },
       );
+
       print(response.data);
 
-      // Pindah halaman ke home jika berhasil register
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        PageTransition(
+          child: ListUser(),
+          type: PageTransitionType.fade,
+        ),
       );
     } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode}');
@@ -56,7 +77,7 @@ class _AddUserState extends State<AddUser> {
         child: Column(
           children: [
             const Text(
-              'Tambahkan Data Anggota',
+              'Edit Data Anggota',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -163,33 +184,21 @@ class _AddUserState extends State<AddUser> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   PageTransition(
-                //     child: AddUser(),
-                //     type: PageTransitionType.fade,
-                //   ),
-                // );
-
-                addUser();
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 14, 95, 161),
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(30)),
-                backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-              ),
-              child: const Text(
-                'Simpan',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                onPressed: () {
+                  updateUser();
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Color.fromARGB(255, 14, 95, 161),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(30)),
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                 ),
-              ),
-            ),
+                child: const Text('Simpan',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
             const SizedBox(
               height: 10,
             ),
