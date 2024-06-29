@@ -39,110 +39,126 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 50,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  goUser(dio, myStorage, apiUrl);
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 14, 95, 161),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text('Cek User',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    goUser(dio, myStorage, apiUrl);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 14, 95, 161),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  child: const Text('Cek User',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)))),
+            ),
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        child: AddUser(), type: PageTransitionType.fade),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 14, 95, 161),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text('Tambah User',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                          child: AddUser(), type: PageTransitionType.fade),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 14, 95, 161),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  child: const Text('Tambah User',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)))),
+            ),
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        child: ListUser(), type: PageTransitionType.fade),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 14, 95, 161),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text('Cek Daftar User',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                          child: ListUser(), type: PageTransitionType.fade),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 14, 95, 161),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  child: const Text('Cek Daftar User',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)))),
+            ),
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        child: ListTransaksi(), type: PageTransitionType.fade),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 14, 95, 161),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text('Transaksi Anggota',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                          child: ListTransaksi(),
+                          type: PageTransitionType.fade),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 14, 95, 161),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  child: const Text('Transaksi Anggota',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)))),
+            ),
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  goLogout(context, dio, myStorage, apiUrl);
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 14, 95, 161),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(30)),
-                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text('Logout',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 255, 255, 255)))),
+            SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    goLogout(context, dio, myStorage, apiUrl);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 14, 95, 161),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  child: const Text('Logout',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)))),
+            ),
           ],
         ),
       ),

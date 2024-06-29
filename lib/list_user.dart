@@ -59,7 +59,7 @@ class _ListUserState extends State<ListUser> {
   }
 
   void editUser(Map<String, dynamic> user) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       PageTransition(
         child: EditUser(user: user),

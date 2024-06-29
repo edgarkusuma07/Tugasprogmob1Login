@@ -24,6 +24,7 @@ class _SaldoUserState extends State<SaldoUser> {
   late String telepon;
   late String tglLahir;
   String saldo = '0';
+  List<Map<String, dynamic>> transaksiHistoy = [];
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _SaldoUserState extends State<SaldoUser> {
     tglLahir = widget.user['tgl_lahir'];
 
     getSaldo();
+    getTransaksiHistory();
   }
 
   void getSaldo() async {
@@ -55,74 +57,171 @@ class _SaldoUserState extends State<SaldoUser> {
     }
   }
 
+  void getTransaksiHistory() async {
+    final response = await dio.get(
+      '$apiUrl/tabungan/${widget.user['id']}',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${myStorage.read('token')}'},
+      ),
+    );
+
+    print(response);
+
+    setState(() {
+      transaksiHistoy =
+          List<Map<String, dynamic>>.from(response.data['data']['tabungan']);
+    });
+  }
+
+  String getNominalWithSign(int trxId, int nominal) {
+    switch (trxId) {
+      case 1:
+      case 2:
+      case 5:
+        return '+ Rp. $nominal';
+      case 3:
+      case 6:
+        return '- Rp. $nominal';
+      default:
+        return 'Rp. $nominal';
+    }
+  }
+
+  String getTransaksiDescription(int trxId) {
+    switch (trxId) {
+      case 1:
+        return 'Setoran Awal';
+      case 2:
+        return 'Tambah Saldo';
+      case 3:
+        return 'Penarikan';
+      case 5:
+        return 'Koreksi Penambahan';
+      case 6:
+        return 'Koreksi Penarikan';
+      default:
+        return 'Transaksi';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saldo User'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              padding: EdgeInsets.symmetric(
-                horizontal: 16,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 200,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  color: Colors.blue,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      nama,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      telepon,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      alamat,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      tglLahir,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      'Sisa saldo : $saldo',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                color: Colors.blue,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    nama,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+              Text('Histori Transaksi'),
+              Column(
+                children: transaksiHistoy.map((transaksi) {
+                  return Container(
+                    width: double.infinity,
+                    height: 200,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
                     ),
-                  ),
-                  Text(
-                    telepon,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      color: Colors.blue,
                     ),
-                  ),
-                  Text(
-                    alamat,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          transaksi['trx_tanggal'],
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          getTransaksiDescription(transaksi['trx_id']),
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          getNominalWithSign(
+                              transaksi['trx_id'], transaksi['trx_nominal']),
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    tglLahir,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    'Sisa saldo : $saldo',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                  );
+                }).toList(),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -57,7 +57,7 @@ class _EditUserState extends State<EditUser> {
 
       print(response.data);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         PageTransition(
           child: ListUser(),

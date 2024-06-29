@@ -39,7 +39,7 @@ class _AddUserState extends State<AddUser> {
       print(response.data);
 
       // Pindah halaman ke home jika berhasil register
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );

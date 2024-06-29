@@ -63,37 +63,17 @@ class _AddTransaksiState extends State<AddTransaksi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Back'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const Text(
-              'Menu Transaksi',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(
               height: 50,
             ),
-            TextField(
-              controller: idAnggotaController,
-              decoration: InputDecoration(
-                  labelText: 'ID Anggota',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+
             TextField(
               controller: trxNominalController,
               decoration: InputDecoration(
@@ -139,6 +119,18 @@ class _AddTransaksiState extends State<AddTransaksi> {
                 DropdownMenuItem<int>(
                   value: 2,
                   child: Text('Tambah Saldo'),
+                ),
+                DropdownMenuItem<int>(
+                  value: 3,
+                  child: Text('Penarikan Saldo'),
+                ),
+                DropdownMenuItem<int>(
+                  value: 5,
+                  child: Text('Koreksi Penambahan'),
+                ),
+                DropdownMenuItem<int>(
+                  value: 6,
+                  child: Text('Koreksi Pengurangan'),
                 ),
               ],
               onChanged: (value) {
