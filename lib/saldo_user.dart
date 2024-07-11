@@ -174,7 +174,7 @@ class _SaldoUserState extends State<SaldoUser> {
               ),
               Text('Histori Transaksi'),
               Column(
-                children: transaksiHistoy.map((transaksi) {
+                children: transaksiHistoy.reversed.map((transaksi) {
                   return Container(
                     width: double.infinity,
                     height: 200,

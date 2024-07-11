@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:progmob_1/homepage.dart';
+import 'package:progmob_1/list_user.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({super.key});
@@ -38,19 +39,71 @@ class _AddUserState extends State<AddUser> {
       );
       print(response.data);
 
-      // Pindah halaman ke home jika berhasil register
+      // Pindah halaman ke home jika berhasil tambah user
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => ListUser()),
       );
     } on DioException catch (e) {
-      print('${e.response} - ${e.response?.statusCode}');
+      if (e.response?.statusCode == 409) {
+        showAlertDialog(context, 'Error', 'Nomor Induk sudah ada!');
+      } else {
+        print('${e.response} - ${e.response?.statusCode}');
+      }
     }
+  }
+
+  void showAlertDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showConfirmDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Konfirmasi'),
+          content: const Text('Apakah Anda yakin ingin menyimpan data ini?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                addUser();
+              },
+              child: const Text('Ya'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -65,19 +118,20 @@ class _AddUserState extends State<AddUser> {
             TextField(
               controller: noIndukController,
               decoration: InputDecoration(
-                  labelText: 'Nomor Induk',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
+                labelText: 'Nomor Induk',
+                labelStyle: const TextStyle(color: Colors.black),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -85,19 +139,20 @@ class _AddUserState extends State<AddUser> {
             TextField(
               controller: namaController,
               decoration: InputDecoration(
-                  labelText: 'Nama Lengkap',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
+                labelText: 'Nama Lengkap',
+                labelStyle: const TextStyle(color: Colors.black),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -105,19 +160,20 @@ class _AddUserState extends State<AddUser> {
             TextField(
               controller: alamatController,
               decoration: InputDecoration(
-                  labelText: 'Alamat',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
+                labelText: 'Alamat',
+                labelStyle: const TextStyle(color: Colors.black),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -125,19 +181,20 @@ class _AddUserState extends State<AddUser> {
             TextField(
               controller: tglLahirController,
               decoration: InputDecoration(
-                  labelText: 'Tanggal Lahir',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
+                labelText: 'Tanggal Lahir',
+                labelStyle: const TextStyle(color: Colors.black),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -145,42 +202,34 @@ class _AddUserState extends State<AddUser> {
             TextField(
               controller: teleponController,
               decoration: InputDecoration(
-                  labelText: 'Telephone',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 0, 0, 0), width: 2),
-                  )),
+                labelText: 'Telephone',
+                labelStyle: const TextStyle(color: Colors.black),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   PageTransition(
-                //     child: AddUser(),
-                //     type: PageTransitionType.fade,
-                //   ),
-                // );
-
-                addUser();
-              },
+              onPressed: showConfirmDialog,
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 14, 95, 161),
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(30)),
+                  side: const BorderSide(
+                    color: Color.fromARGB(255, 14, 95, 161),
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 backgroundColor: const Color.fromARGB(255, 0, 0, 0),
               ),
               child: const Text(

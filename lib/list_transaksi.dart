@@ -76,7 +76,13 @@ class _ListTransaksiState extends State<ListTransaksi> {
                   return Card(
                     child: ListTile(
                       title: Text(user['nama']),
-                      subtitle: Text(user['tgl_lahir']),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${user["nomor_induk"]}"),
+                          Text("${user["tgl_lahir"]}"),
+                        ],
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -93,7 +99,7 @@ class _ListTransaksiState extends State<ListTransaksi> {
                               goSaldo(user);
                             },
                             icon: const Icon(
-                              Icons.money,
+                              Icons.history,
                             ),
                           )
                         ],

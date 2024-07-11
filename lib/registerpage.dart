@@ -53,7 +53,9 @@ class Register extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    width: 2,
+                  ),
                 ),
               ),
             ),
@@ -74,7 +76,9 @@ class Register extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    width: 2,
+                  ),
                 ),
               ),
             ),
@@ -83,6 +87,7 @@ class Register extends StatelessWidget {
             ),
             TextField(
               controller: passwordController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
                 labelStyle: const TextStyle(color: Colors.black),
@@ -90,12 +95,17 @@ class Register extends StatelessWidget {
                 filled: true,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                  borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    width: 2,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: const BorderSide(
-                      color: Color.fromARGB(255, 0, 0, 0), width: 2),
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    width: 2,
+                  ),
                 ),
               ),
             ),
@@ -105,52 +115,63 @@ class Register extends StatelessWidget {
             SizedBox(
               width: 250,
               child: ElevatedButton(
-                  onPressed: () {
-                    goRegister(context, dio, apiUrl, nameController,
-                        emailController, passwordController);
-                    // Navigator.push(
-                    //     context,
-                    //     PageTransition(
-                    //         child: const HomePage(),
-                    //         type: PageTransitionType.fade));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                onPressed: () {
+                  goRegister(
+                    context,
+                    dio,
+                    apiUrl,
+                    nameController,
+                    emailController,
+                    passwordController,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 14, 95, 161),
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  child: const Text('Masuk',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20,
-                      ))),
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                ),
+                child: const Text(
+                  'Daftar',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-void goRegister(BuildContext context, dio, apiUrl, nameController,
-    emailController, passwordController) async {
-  try {
-    final response = await dio.post(
-      '$apiUrl/register',
-      data: {
-        'name': nameController.text,
-        'email': emailController.text,
-        'password': passwordController.text,
-      },
-    );
-    print(response.data);
-    Navigator.push(context,
-        PageTransition(child: LoginPage(), type: PageTransitionType.fade));
-  } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
+  void goRegister(BuildContext context, dio, apiUrl, nameController,
+      emailController, passwordController) async {
+    try {
+      final response = await dio.post(
+        '$apiUrl/register',
+        data: {
+          'name': nameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+        },
+      );
+      print(response.data);
+
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          child: LoginPage(),
+          type: PageTransitionType.fade,
+        ),
+      );
+    } on DioError catch (e) {
+      print('Error: ${e.message}');
+    }
   }
 }

@@ -22,145 +22,202 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Beranda'),
-          NavigationDestination(icon: Icon(Icons.trolley), label: 'Keranjang'),
-          NavigationDestination(icon: Icon(Icons.people), label: 'Profil'),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Transaksi'),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'List User'),
         ],
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              // Navigasi ke halaman Home
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+              break;
+            case 1:
+              // Navigasi ke halaman Anggota
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ListTransaksi()),
+              );
+              break;
+            case 2:
+              // Navigasi ke halaman Wallet
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ListUser()),
+              );
+              break;
+          }
+        },
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Selamat Datang di Home Page',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    goUser(dio, myStorage, apiUrl);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                  ),
-                  child: const Text('Cek User',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255)))),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: AddUser(), type: PageTransitionType.fade),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                  ),
-                  child: const Text('Tambah User',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255)))),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: ListUser(), type: PageTransitionType.fade),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                  ),
-                  child: const Text('Cek Daftar User',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255)))),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: ListTransaksi(),
-                          type: PageTransitionType.fade),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                  ),
-                  child: const Text('Transaksi Anggota',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255)))),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    goLogout(context, dio, myStorage, apiUrl);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 14, 95, 161),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-                  ),
-                  child: const Text('Logout',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255)))),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(221, 248, 45, 102),
+              Color.fromARGB(255, 51, 120, 177),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.black87, Colors.grey],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                ),
+                child: const Text(
+                  'Selamat Datang di Home Page',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              CardButton(
+                onPressed: () {
+                  goUser(dio, myStorage, apiUrl);
+                },
+                label: 'Cek User',
+                icon: Icons.person,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CardButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: AddUser(),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
+                label: 'Tambah User',
+                icon: Icons.person_add,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CardButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: ListUser(),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
+                label: 'Cek Daftar User',
+                icon: Icons.people,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CardButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: ListTransaksi(),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
+                label: 'Transaksi Anggota',
+                icon: Icons.attach_money,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CardButton(
+                onPressed: () {
+                  goLogout(context, dio, myStorage, apiUrl);
+                },
+                label: 'Logout',
+                icon: Icons.exit_to_app,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CardButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String label;
+  final IconData icon;
+
+  const CardButton({
+    required this.onPressed,
+    required this.label,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 300,
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+          side: const BorderSide(
+            color: Color.fromARGB(255, 255, 255, 255),
+            width: 2,
+          ),
+        ),
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(30),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(icon, color: Colors.white),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Opacity(
+                  opacity: 0,
+                  child: Icon(icon),
+                ),
+              ],
+            ),
+          ),
+        ),
+        color: Color.fromARGB(255, 0, 0, 0),
       ),
     );
   }
@@ -190,7 +247,11 @@ void goLogout(BuildContext context, dio, myStorage, apiUrl) async {
     );
     print(response.data);
 
-    Navigator.push(
+    // Hapus token setelah logout
+    await myStorage.erase();
+
+    // Navigasi ke halaman login
+    Navigator.pushReplacement(
       context,
       PageTransition(child: LoginPage(), type: PageTransitionType.fade),
     );

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:progmob_1/AddUser.dart';
 import 'package:progmob_1/edit_user.dart';
 
 class ListUser extends StatefulWidget {
@@ -88,7 +89,13 @@ class _ListUserState extends State<ListUser> {
                   return Card(
                     child: ListTile(
                       title: Text(user['nama']),
-                      subtitle: Text(user['tgl_lahir']),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${user["nomor_induk"]}"),
+                          Text("${user["tgl_lahir"]}"),
+                        ],
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
